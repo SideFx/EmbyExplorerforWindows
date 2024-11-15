@@ -362,8 +362,11 @@ func detailsActionTriggered() {
 		}
 	} else {
 		if seriesSelection >= 0 {
-			showDetails()
-			seriesGetDetail()
+			data := seriesModel.GetItem(seriesSelection)
+			if data.Type_ == api.SeasonType || data.Type_ == api.EpisodeType {
+				showDetails()
+				seriesGetDetail()
+			}
 		}
 	}
 }
@@ -383,7 +386,12 @@ func moviesSelectionChanged() {
 
 func seriesSelectionChanged() {
 	seriesSelection = tvSeries.CurrentIndex()
-	seriesGetDetail()
+	if seriesSelection >= 0 {
+		data := seriesModel.GetItem(seriesSelection)
+		if data.Type_ == api.SeasonType || data.Type_ == api.EpisodeType {
+			seriesGetDetail()
+		}
+	}
 }
 
 func videosSelectionChanged() {

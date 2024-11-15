@@ -46,6 +46,6 @@ const FileExtension = "xlsx"
 
 const (
 	TxtAboutEmbyExplorer = "Emby Explorer for Windows\n(w) 2024 Jan Buchholz"
-	TxtCredits           = "Credits go to:\nAlexander Neumann\nhttps://github.com/lxn/walk\n" +
-		"Excelize team\nhttps://github.com/qax-os/excelize"
+	TxtCredits           = "Credits go to:\nThe Walk team\nhttps://github.com/lxn/walk\n" +
+		"The Excelize team\nhttps://github.com/qax-os/excelize"
 )

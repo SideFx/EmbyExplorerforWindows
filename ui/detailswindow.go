@@ -13,24 +13,26 @@ var button *walk.PushButton
 var detailsIsOpen = false
 
 const (
-	wndWidth       = 500
-	wndHeight      = 330
+	wndWidth       = 660
+	wndHeight      = 350
 	coverMaxWidth  = "250"
 	coverMaxHeight = "250"
 )
 
 func showDetails() {
 	if err := (MainWindow{
-		AssignTo: &detailsWindow,
-		Title:    assets.CapDetails,
-		Icon:     "/assets/app.ico",
-		MinSize:  Size{Width: wndWidth, Height: wndHeight},
-		MaxSize:  Size{Width: wndWidth, Height: wndHeight},
-		Size:     Size{Width: wndWidth, Height: wndHeight},
-		Layout:   VBox{},
+		AssignTo:        &detailsWindow,
+		Title:           assets.CapDetails,
+		Icon:            "/assets/app.ico",
+		MinSize:         Size{Width: wndWidth, Height: wndHeight},
+		MaxSize:         Size{Width: wndWidth, Height: wndHeight},
+		Size:            Size{Width: wndWidth, Height: wndHeight},
+		Layout:          VBox{},
+		DoubleBuffering: true,
 		OnSizeChanged: func() {
 			_ = detailsWindow.SetHeight(wndHeight)
 			_ = detailsWindow.SetWidth(wndWidth)
+			_ = detailsWindow.Invalidate()
 		},
 		Children: []Widget{
 			Composite{Layout: Grid{Columns: 2, MarginsZero: true, SpacingZero: true},
@@ -43,12 +45,15 @@ func showDetails() {
 						Mode:       ImageViewModeIdeal,
 					},
 					TextEdit{
-						AssignTo:  &txtEdit,
-						MinSize:   Size{Width: 250, Height: 250},
-						Alignment: AlignHCenterVCenter,
-						ReadOnly:  true,
-						HScroll:   false,
-						VScroll:   true,
+						AssignTo:        &txtEdit,
+						MinSize:         Size{Width: 400, Height: 250},
+						Alignment:       AlignHCenterVCenter,
+						Background:      SolidColorBrush{Color: walk.RGB(255, 255, 255)},
+						DoubleBuffering: true,
+						ReadOnly:        true,
+						Enabled:         false,
+						HScroll:         false,
+						VScroll:         false,
 					},
 				},
 			},
@@ -82,5 +87,4 @@ func setDetails(imagePath string, overview string) {
 			_ = imgView.SetImage(image)
 		}
 	}
-	_ = button.SetFocus()
 }
