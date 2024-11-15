@@ -3,5 +3,5 @@ Emby Explorer for Windows
 
 
 This version of Emby Explorer can be compiled natively for Windows on arm64. There're no C/C++ library dependencies.
-
+If you want to compile an x86 version the rsrc.syso needs to be rebuild.
 
