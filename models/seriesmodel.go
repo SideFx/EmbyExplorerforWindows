@@ -28,7 +28,7 @@ var SeriesTableDescription = TableDescription{
 		{"Ext.", "I", 10},
 		{"Codec", "J", 20},
 		{"Resolution", "K", 15},
-		{"Path", "L", 80},
+		{"Path / Filename", "L", 80},
 	},
 }
 

@@ -23,7 +23,7 @@ var VideosTableDescription = TableDescription{
 		{"Ext.", "D", 10},
 		{"Codec", "E", 20},
 		{"Resolution", "F", 15},
-		{"Path", "G", 150},
+		{"Filename", "G", 150},
 	},
 }
 

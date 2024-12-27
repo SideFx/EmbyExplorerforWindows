@@ -7,6 +7,7 @@ package api
 
 import (
 	"EmbyExplorer_for_Windows/models"
+	"path/filepath"
 	"sort"
 	"strconv"
 )
@@ -52,7 +53,7 @@ func GetMovieDisplayData(dto []BaseItemDto) []*models.MovieData {
 		movie.Resolution = evalResolution(d.Width, d.Height)
 		movie.Codecs = evalCodecs(d.MediaSources)
 		movie.Runtime = evalRuntime(d.RunTimeTicks)
-		movie.Path = d.Path
+		movie.Path = filepath.Base(d.Path)
 		movie.Overview = d.Overview
 		result = append(result, movie)
 	}
@@ -97,7 +98,7 @@ func GetSeriesDisplayData(dto []BaseItemDto) []*models.SeriesData {
 			item.ProductionYear = strconv.Itoa(int(d.ProductionYear))
 			item.Actors, _ = evalPeople(d.People)
 			item.SortIndex = d.IndexNumber
-			item.Path = d.Path
+			item.Path = filepath.Base(d.Path)
 			item.Overview = d.Overview
 			item.SeriesId = d.SeriesId
 			item.SeasonId = d.SeasonId
@@ -168,7 +169,7 @@ func GetVideoDisplayData(dto []BaseItemDto) []*models.VideoData {
 			video.Resolution = evalResolution(d.Width, d.Height)
 			video.Codecs = evalCodecs(d.MediaSources)
 			video.Runtime = evalRuntime(d.RunTimeTicks)
-			video.Path = d.Path
+			video.Path = filepath.Base(d.Path)
 			video.ParentId = d.ParentId
 			videos = append(videos, video)
 			break

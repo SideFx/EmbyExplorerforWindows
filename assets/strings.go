@@ -7,7 +7,7 @@ package assets
 
 const (
 	AppName            = "Emby Explorer for Windows"
-	Version            = "v1.0"
+	Version            = "v1.1"
 	CapFile            = "File"
 	CapQuit            = "Quit"
 	CapHelp            = "Help"
