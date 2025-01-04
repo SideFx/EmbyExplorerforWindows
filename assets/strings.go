@@ -7,7 +7,7 @@ package assets
 
 const (
 	AppName            = "Emby Explorer for Windows"
-	Version            = "v1.1"
+	Version            = "v1.2"
 	CapFile            = "File"
 	CapQuit            = "Quit"
 	CapHelp            = "Help"
@@ -45,7 +45,7 @@ const (
 const FileExtension = "xlsx"
 
 const (
-	TxtAboutEmbyExplorer = "Emby Explorer for Windows\n(w) 2024 Jan Buchholz"
+	TxtAboutEmbyExplorer = "Emby Explorer for Windows\n(w) 2024-2025 by Jan Buchholz"
 	TxtCredits           = "Credits go to:\nThe Walk team\nhttps://github.com/lxn/walk\n" +
 		"The Excelize team\nhttps://github.com/qax-os/excelize"
 )

@@ -39,6 +39,7 @@ var seriesModel *models.SeriesModel
 var videoModel *models.VideoModel
 var prefAction, authAction, fetchAction, detailsAction, exportAction,
 	quitAction, aboutAction *walk.Action
+var logoView *walk.ImageView
 var tab *walk.TabWidget
 var moviesPage, seriesPage, videosPage *walk.TabPage
 var handleTabChange bool
@@ -141,74 +142,85 @@ func CreateUi() error {
 		},
 		Layout: VBox{MarginsZero: false},
 		Children: []Widget{
-			TabWidget{
-				AssignTo:              &tab,
-				Visible:               false,
-				Enabled:               true,
-				OnCurrentIndexChanged: onTabChanged,
-				Pages: []TabPage{
-					{
-						AssignTo: &moviesPage,
-						Enabled:  false,
-						Title:    assets.CapNotAvailable,
-						Content: TableView{
-							AssignTo:         &tvMovies,
-							Columns:          colsMovies,
-							MultiSelection:   false,
-							CheckBoxes:       false,
-							ColumnsOrderable: false,
-							Visible:          true,
-							Enabled:          true,
-							StyleCell: func(style *walk.CellStyle) {
-								style.BackgroundColor = walk.RGB(255, 255, 255)
-								style.TextColor = walk.RGB(0, 0, 0)
+			Composite{Layout: Grid{Rows: 2, MarginsZero: true, SpacingZero: true},
+				Children: []Widget{
+					TabWidget{
+						AssignTo:              &tab,
+						Visible:               false,
+						Enabled:               true,
+						OnCurrentIndexChanged: onTabChanged,
+						Pages: []TabPage{
+							{
+								AssignTo: &moviesPage,
+								Enabled:  false,
+								Title:    assets.CapNotAvailable,
+								Content: TableView{
+									AssignTo:         &tvMovies,
+									Columns:          colsMovies,
+									MultiSelection:   false,
+									CheckBoxes:       false,
+									ColumnsOrderable: false,
+									Visible:          true,
+									Enabled:          true,
+									StyleCell: func(style *walk.CellStyle) {
+										style.BackgroundColor = walk.RGB(255, 255, 255)
+										style.TextColor = walk.RGB(0, 0, 0)
+									},
+									OnCurrentIndexChanged: func() {
+										moviesSelectionChanged()
+									},
+								},
 							},
-							OnCurrentIndexChanged: func() {
-								moviesSelectionChanged()
+							{
+								AssignTo: &seriesPage,
+								Enabled:  false,
+								Title:    assets.CapNotAvailable,
+								Content: TableView{
+									AssignTo:         &tvSeries,
+									Columns:          colsSeries,
+									MultiSelection:   false,
+									CheckBoxes:       false,
+									ColumnsOrderable: false,
+									Visible:          true,
+									Enabled:          true,
+									StyleCell: func(style *walk.CellStyle) {
+										style.BackgroundColor = walk.RGB(255, 255, 255)
+										style.TextColor = walk.RGB(0, 0, 0)
+									},
+									OnCurrentIndexChanged: func() {
+										seriesSelectionChanged()
+									},
+								},
+							},
+							{
+								AssignTo: &videosPage,
+								Enabled:  false,
+								Title:    assets.CapNotAvailable,
+								Content: TableView{
+									AssignTo:         &tvVideos,
+									Columns:          colsVideos,
+									MultiSelection:   false,
+									CheckBoxes:       false,
+									ColumnsOrderable: false,
+									Visible:          true,
+									Enabled:          true,
+									StyleCell: func(style *walk.CellStyle) {
+										style.BackgroundColor = walk.RGB(255, 255, 255)
+										style.TextColor = walk.RGB(0, 0, 0)
+									},
+									OnCurrentIndexChanged: func() {
+										videosSelectionChanged()
+									},
+								},
 							},
 						},
 					},
-					{
-						AssignTo: &seriesPage,
-						Enabled:  false,
-						Title:    assets.CapNotAvailable,
-						Content: TableView{
-							AssignTo:         &tvSeries,
-							Columns:          colsSeries,
-							MultiSelection:   false,
-							CheckBoxes:       false,
-							ColumnsOrderable: false,
-							Visible:          true,
-							Enabled:          true,
-							StyleCell: func(style *walk.CellStyle) {
-								style.BackgroundColor = walk.RGB(255, 255, 255)
-								style.TextColor = walk.RGB(0, 0, 0)
-							},
-							OnCurrentIndexChanged: func() {
-								seriesSelectionChanged()
-							},
-						},
-					},
-					{
-						AssignTo: &videosPage,
-						Enabled:  false,
-						Title:    assets.CapNotAvailable,
-						Content: TableView{
-							AssignTo:         &tvVideos,
-							Columns:          colsVideos,
-							MultiSelection:   false,
-							CheckBoxes:       false,
-							ColumnsOrderable: false,
-							Visible:          true,
-							Enabled:          true,
-							StyleCell: func(style *walk.CellStyle) {
-								style.BackgroundColor = walk.RGB(255, 255, 255)
-								style.TextColor = walk.RGB(0, 0, 0)
-							},
-							OnCurrentIndexChanged: func() {
-								videosSelectionChanged()
-							},
-						},
+					ImageView{
+						AssignTo:  &logoView,
+						Alignment: AlignHCenterVCenter,
+						Mode:      ImageViewModeShrink,
+						Image:     "/assets/embylogo.png",
+						Visible:   true,
 					},
 				},
 			},
@@ -291,6 +303,7 @@ func authActionTriggered() {
 		}
 	}
 	_ = fetchAction.SetEnabled(true)
+	logoView.SetVisible(false)
 	tab.SetVisible(true)
 }
 
