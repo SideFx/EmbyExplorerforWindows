@@ -1,6 +1,6 @@
 module EmbyExplorer_for_Windows
 
-go 1.23.4
+go 1.24.0
 
 require (
 	github.com/lxn/walk v0.0.0-20210112085537-c389da54e794
@@ -13,10 +13,10 @@ require (
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
 	github.com/xuri/efp v0.0.0-20241211021726-c4e992084aa6 // indirect
-	github.com/xuri/nfp v0.0.0-20240318013403-ab9948c2c4a7 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	github.com/xuri/nfp v0.0.0-20250111060730-82a408b9aa71 // indirect
+	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/net v0.35.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	gopkg.in/Knetic/govaluate.v3 v3.0.0 // indirect
 )

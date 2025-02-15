@@ -34,6 +34,7 @@ const (
 	CapVideos          = "Home Videos"
 	CapEmby            = "Emby"
 	CapExcelFiles      = "Excel files"
+	DefaultPort        = "8096"
 )
 
 const (

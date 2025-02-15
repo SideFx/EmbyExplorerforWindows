@@ -57,8 +57,10 @@ func GetLastExportFolder() string {
 }
 
 func Valid() bool {
-	return settings.EmbyServer != "" && settings.EmbyPort != "" && settings.EmbyUser != "" && len(settings.EmbyPassword) > 0 &&
-		settings.WindowRect.Width > 0 && settings.WindowRect.Height > 0
+	return settings.EmbyServer != "" &&
+		settings.EmbyPort != "" &&
+		settings.EmbyUser != "" &&
+		len(settings.EmbyPassword) > 0
 }
 
 func SavePreferences() {

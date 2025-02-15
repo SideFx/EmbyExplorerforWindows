@@ -160,7 +160,8 @@ func FindUserIdByName(username string) (string, error) {
 	var response *http.Response
 	var err error
 	var body []byte
-	response, err = http.Get(CreateRestUrl(GETUsersPublic))
+	var url = CreateRestUrl(GETUsersPublic)
+	response, err = http.Get(url)
 	if err != nil {
 		return "", err
 	}

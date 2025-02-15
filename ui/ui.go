@@ -108,7 +108,7 @@ func CreateUi() error {
 					AssignTo:    &authAction,
 					Text:        assets.CapAuthenticate,
 					Image:       "/assets/authenticate.png",
-					Enabled:     true,
+					Enabled:     false,
 					Visible:     true,
 					OnTriggered: authActionTriggered,
 				},
@@ -241,11 +241,7 @@ func CreateUi() error {
 			bounds.Height = wndMinHeight
 		}
 		_ = mainWindow.SetBounds(bounds)
-		if settings.Valid() {
-			h, s, p, u, x := settings.GetConnectionSettings()
-			api.InitApiPreferences(h, s, p, u, x)
-			_ = authAction.SetEnabled(true)
-		}
+		enableAuth()
 	}
 	// initialize tab content
 	handleTabChange = false
@@ -263,16 +259,27 @@ func quitActionTriggered() {
 }
 
 func prefActionTriggered() {
-	preferencesDialog()
-	if settings.Valid() {
+	dlg := preferencesDialog()
+	if dlg == nil {
+		return
+	}
+	dlg.Run()
+	enableAuth()
+}
+
+func enableAuth() {
+	b := settings.Valid()
+	if b {
 		h, s, p, u, x := settings.GetConnectionSettings()
 		api.InitApiPreferences(h, s, p, u, x)
 	}
+	_ = authAction.SetEnabled(b)
 }
 
 func authActionTriggered() {
 	var err error
 	var views []api.UserView
+	enableAuth()
 	err = api.AuthenticateUserInt()
 	if err != nil {
 		dialogToDisplaySystemError(assets.ErrAuthFailed, err)

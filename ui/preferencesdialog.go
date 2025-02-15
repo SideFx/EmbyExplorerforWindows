@@ -21,7 +21,7 @@ var cancelBtn, okBtn *walk.PushButton
 
 // cannot fix: LineEdit for port cannot be sized (MaxSize does nothing)
 
-func preferencesDialog() {
+func preferencesDialog() *walk.Dialog {
 	const (
 		dialogWidth  = 300
 		dialogHeight = 250
@@ -108,8 +108,12 @@ func preferencesDialog() {
 		_ = editPort.SetText(p)
 		_ = editUser.SetText(u)
 		_ = editPassword.SetText(x)
-		dialog.Show()
+		if len(editPort.Text()) == 0 {
+			_ = editPort.SetText(assets.DefaultPort)
+		}
+		return dialog
 	}
+	return nil
 }
 
 func checkComplete() {
