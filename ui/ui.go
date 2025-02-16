@@ -48,6 +48,7 @@ var movieCollId, seriesCollId, videoCollId string
 var movieSelection, seriesSelection = -1, -1
 var tempFolder string
 var lastExportFolder string
+var globalShutdown = false
 
 func init() {
 	tempFolder = os.TempDir()
@@ -250,6 +251,7 @@ func CreateUi() error {
 	_ = tab.SetCurrentIndex(2)
 	_ = tab.SetCurrentIndex(activePage)
 	handleTabChange = true
+	createDetailsDialog()
 	mainWindow.Run()
 	return nil
 }
@@ -375,16 +377,19 @@ func fetchActionTriggered() {
 }
 
 func detailsActionTriggered() {
+	if detailsDialogIsOpen {
+		detailsDialog.Hide()
+		detailsDialogIsOpen = false
+		return
+	}
 	if activePage == 0 {
 		if movieSelection >= 0 {
-			showDetails()
 			movieGetDetail()
 		}
 	} else {
 		if seriesSelection >= 0 {
 			data := seriesModel.GetItem(seriesSelection)
 			if data.Type_ == api.SeasonType || data.Type_ == api.EpisodeType {
-				showDetails()
 				seriesGetDetail()
 			}
 		}
@@ -401,7 +406,9 @@ func aboutActionTriggered() {
 
 func moviesSelectionChanged() {
 	movieSelection = tvMovies.CurrentIndex()
-	movieGetDetail()
+	if detailsDialogIsOpen {
+		movieGetDetail()
+	}
 }
 
 func seriesSelectionChanged() {
@@ -427,6 +434,10 @@ func onTabChanged() {
 
 func onClosing(canceled *bool, _ walk.CloseReason) {
 	*canceled = false
+	globalShutdown = true
+	if detailsDialog != nil {
+		detailsDialog.Close(0)
+	}
 	settings.SetWindowBounds(mainWindow.Bounds())
 	settings.SetLastExportFolder(lastExportFolder)
 	settings.SavePreferences()
@@ -435,7 +446,7 @@ func onClosing(canceled *bool, _ walk.CloseReason) {
 func movieGetDetail() {
 	var err error
 	var rawImage []byte
-	if movieSelection >= 0 && detailsIsOpen {
+	if movieSelection >= 0 {
 		data := movieModel.GetItem(movieSelection)
 		rawImage, err = api.GetPrimaryImageForItemInt(data.MovieId, api.ImageFormatPng, coverMaxWidth, coverMaxHeight)
 		if err == nil {
@@ -452,7 +463,7 @@ func movieGetDetail() {
 func seriesGetDetail() {
 	var err error
 	var rawImage []byte
-	if seriesSelection >= 0 && detailsIsOpen {
+	if seriesSelection >= 0 {
 		data := seriesModel.GetItem(seriesSelection)
 		rawImage, err = api.GetPrimaryImageForItemInt(data.SeasonId, api.ImageFormatPng, coverMaxWidth, coverMaxHeight)
 		if err == nil {
